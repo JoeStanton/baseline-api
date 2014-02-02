@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140202205758) do
+ActiveRecord::Schema.define(version: 20140202211445) do
+
+  create_table "components", force: true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.string   "version"
+    t.string   "status"
+    t.integer  "service_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hosts", force: true do |t|
+    t.string   "hostname"
+    t.string   "ip"
+    t.string   "environment"
+    t.string   "status"
+    t.integer  "service_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "services", force: true do |t|
     t.string   "name"
