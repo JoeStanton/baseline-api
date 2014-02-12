@@ -10,7 +10,7 @@ class HostsController < ApplicationController
   # GET /hosts/1
   # GET /hosts/1.json
   def show
-    @host = Host.find(params[:id])
+    @host = Host.find_by(hostname: params[:id])
 
     render json: @host
   end
@@ -18,7 +18,7 @@ class HostsController < ApplicationController
   # POST /hosts
   # POST /hosts.json
   def create
-    @host = Host.new(params[:host])
+    @host = Host.new(host_params)
 
     if @host.save
       render json: @host, status: :created, location: @host
@@ -30,7 +30,7 @@ class HostsController < ApplicationController
   # PATCH/PUT /hosts/1
   # PATCH/PUT /hosts/1.json
   def update
-    @host = Host.find(params[:id])
+    @host = Host.find_by(hostname: params[:id])
 
     if @host.update(params[:host])
       head :no_content
@@ -42,9 +42,15 @@ class HostsController < ApplicationController
   # DELETE /hosts/1
   # DELETE /hosts/1.json
   def destroy
-    @host = Host.find(params[:id])
+    @host = Host.find_by(hostname: params[:id])
     @host.destroy
 
     head :no_content
+  end
+
+  private
+
+  def host_params
+    params.require(:host).permit(:hostname, :ip)
   end
 end
