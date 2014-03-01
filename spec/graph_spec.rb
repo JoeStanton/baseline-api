@@ -74,4 +74,15 @@ describe Node do
       n1.out(:nothing).should be_empty
     end
   end
+
+  describe "#in" do
+    it "should list related nodes via incoming relationships" do
+      n2.in.should == [n1]
+    end
+
+    it "should constrain by type" do
+      n2.in(:depends_on).should == [n1]
+      n2.in(:nothing).should be_empty
+    end
+  end
 end
