@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class Graph
   attr_accessor :nodes, :edges
 
