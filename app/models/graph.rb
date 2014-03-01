@@ -37,7 +37,7 @@ class Node
 
   def relate(to, type)
     return if out(type).map(&:to).include? to
-    graph.edges << OpenStruct.new(from: self, to: to, type: type)
+    graph.edges << Edge.new(self, to, type)
   end
 
   def in(type = nil)
@@ -56,5 +56,15 @@ class Node
     else
       edges
     end
+  end
+end
+
+class Edge
+  attr_accessor :from, :to, :type
+
+  def initialize(from, to, type)
+    @from = from
+    @to = to
+    @type = type
   end
 end
