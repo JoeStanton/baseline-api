@@ -60,7 +60,7 @@ class Node
 end
 
 class Edge
-  attr_accessor :from, :to, :type
+  attr_reader :from, :to, :type
 
   def initialize(from, to, type)
     @from = from
