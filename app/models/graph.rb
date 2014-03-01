@@ -36,26 +36,20 @@ class Node
   end
 
   def relate(to, type)
-    return if out(type).map(&:to).include? to
+    return if out(type).include? to
     graph.edges << Edge.new(self, to, type)
   end
 
   def in(type = nil)
     edges = graph.edges.select { |edge| edge.to }
-    if type
-      edges.select { |edge| edge.type == type }
-    else
-      edges
-    end
+    edges = edges.select { |edge| edge.type == type } if type
+    edges.map(&:from)
   end
 
   def out(type = nil)
     edges = graph.edges.select { |edge| edge.from }
-    if type
-      edges.select { |edge| edge.type == type }
-    else
-      edges
-    end
+    edges = edges.select { |edge| edge.type == type } if type
+    edges.map(&:to)
   end
 end
 

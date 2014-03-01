@@ -65,12 +65,12 @@ describe Node do
   end
 
   describe "#out" do
-    it "should list outgoing relationships" do
-      n1.out.should have(1).item
+    it "should list related nodes via outgoing relationships" do
+      n1.out.should == [n2]
     end
 
     it "should constrain by type" do
-      n1.out(:depends_on).should have(1).item
+      n1.out(:depends_on).should == [n2]
       n1.out(:nothing).should be_empty
     end
   end
