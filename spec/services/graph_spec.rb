@@ -1,4 +1,4 @@
-require './app/models/graph.rb'
+require './app/services/graph.rb'
 
 describe Graph do
   describe ".new" do
