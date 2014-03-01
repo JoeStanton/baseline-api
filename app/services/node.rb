@@ -1,5 +1,5 @@
 class Node
-  attr_accessor :id, :graph
+  attr_accessor :id
   include ActiveModel::Model
 
   def initialize(hash = nil)
