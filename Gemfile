@@ -9,6 +9,7 @@ gem 'pusher'
 gem 'pusherable'
 
 # Use sqlite3 as the database for Active Record
+gem 'rspec-rails'
 gem 'sqlite3'
 
 # To use ActiveModel has_secure_password
