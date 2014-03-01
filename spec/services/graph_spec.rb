@@ -16,6 +16,7 @@ describe Graph do
 
   describe "load / save", slow: true do
     it "should return a new database if one doesn't exist" do
+      Graph.reset!
       Graph.should_receive(:new)
       Graph.load
     end
