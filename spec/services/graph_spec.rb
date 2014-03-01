@@ -1,8 +1,6 @@
-require './app/services/graph.rb'
-
 describe Graph do
   describe ".new" do
-    g = Graph.new "new_test"
+    g = Graph.new
 
     it "should be empty" do
       g.nodes.should be_empty
@@ -12,38 +10,51 @@ describe Graph do
 
   describe ".path" do
     it "should be constructed based on the environment" do
-      Graph.path("test").should == "db/test.db"
+      Graph.path.should == "db/test.db"
     end
   end
 
   describe "load / save", slow: true do
     describe ".load" do
       it "should return a new database if one doesn't exist" do
-        Graph.should_receive(:new).with("fake")
-        Graph.load("fake")
+        Graph.should_receive(:new)
+        Graph.load
+      end
+
+      it "should be a singleton" do
+        Graph.load.should == Graph.load
       end
     end
 
     it "should round-trip a database successfully" do
-      sample = Graph.load "round-trip"
-      sample.nodes = nodes = [1, 2, 3]
-      sample.edges = edges = [ {from: 1, to: 2} ]
-      sample.save
+      sample = Graph.load
+      class Sample < Node
+        attr_accessor :i
+      end
+      sample.nodes = [1, 2, 3].map { |i| Sample.new(i: i) }
+      sample.edges = edges = [ Edge.new(1, 2, :friend) ]
 
-      loaded = Graph.load "round-trip"
-      loaded.nodes.should == nodes
+      sample.save
+      Graph.reset!
+
+      loaded = Graph.load
+      loaded.nodes.map(&:i).should == [1, 2, 3]
       loaded.edges.should == edges
 
-      File.unlink "db/round-trip.db"
     end
+  end
+
+  after(:each) do
+    File.unlink "db/test.db" if File.exists? "db/test.db"
+    Graph.reset!
   end
 end
 
 describe Node do
   before(:all) do
-    @graph = Graph.new "relate"
-    @n1 = Node.new(@graph)
-    @n2 = Node.new(@graph)
+    @graph = Graph.load
+    @n1 = Node.new
+    @n2 = Node.new
 
     @graph.nodes << @n1
     @graph.nodes << @n2
@@ -86,5 +97,9 @@ describe Node do
       @n2.in(:depends_on).should == [@n1]
       @n2.in(:nothing).should be_empty
     end
+  end
+
+  after(:all) do
+    Graph.reset!
   end
 end

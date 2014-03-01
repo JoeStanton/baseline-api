@@ -5,6 +5,8 @@ gem 'rails', '4.0.2'
 
 gem 'rails-api'
 
+gem 'values'
+
 gem 'pusher'
 gem 'pusherable'
 

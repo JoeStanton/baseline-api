@@ -1,6 +1,5 @@
-class Service < ActiveRecord::Base
-  has_many :components
-  has_many :hosts
+class Service < Node
+  include ActiveModel::Model
 
   include Pusherable
   pusherable('updates')

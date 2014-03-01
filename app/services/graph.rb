@@ -1,26 +1,32 @@
 class Graph
   attr_accessor :nodes, :edges
 
-  def initialize(name)
-    @name = name
-    @nodes = []
-    @edges = []
+  def self.path
+    "db/#{Rails.env}.db"
   end
 
-  def self.path(name)
-    "db/#{name}.db"
-  end
+  def self.load
+    return @instance if @instance
 
-  def self.load(name)
-    db = path(name)
-    if File.exists?(db)
-      Marshal.load(File.read(db))
+    if File.exists?(path)
+      @instance = Marshal.load(File.read(path))
     else
-      Graph.new(name)
+      @instance = Graph.new
     end
   end
 
+  def self.reset!
+    @instance = nil
+  end
+
   def save
-    File.open(self.class.path(@name), 'w') {|f| f.write(Marshal.dump(self)) }
+    File.open(self.class.path, 'w') {|f| f.write(Marshal.dump(self)) }
+  end
+
+  private
+
+  def initialize
+    @nodes = []
+    @edges = []
   end
 end

@@ -1,14 +1,20 @@
 class Node
   attr_accessor :id, :graph
+  include ActiveModel::Model
 
-  def initialize(graph)
+  def initialize(hash = nil)
     @id = graph.nodes.size + 1
-    @graph = graph
+    super
+  end
+
+  def graph
+    Graph.load
   end
 
   def relate(to, type)
     return if out(type).include? to
-    graph.edges << Edge.new(self, to, type)
+    edge = Edge.new(self, to, type)
+    graph.edges << edge
   end
 
   def in(type = nil)
@@ -21,5 +27,9 @@ class Node
     edges = graph.edges.select { |edge| edge.from }
     edges = edges.select { |edge| edge.type == type } if type
     edges.map(&:to)
+  end
+
+  def self.all
+    Graph.load.nodes
   end
 end
