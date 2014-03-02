@@ -14,6 +14,8 @@ gem 'simplecov'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+gem 'active_model_serializers'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

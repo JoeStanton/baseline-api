@@ -4,7 +4,7 @@ class ServicesController < ApplicationController
   def index
     @services = Service.all
 
-    render json: @services.to_json(include: [:components, :hosts])
+    render json: @services
   end
 
   # GET /services/1
@@ -12,7 +12,7 @@ class ServicesController < ApplicationController
   def show
     @service = Service.find(params[:id])
 
-    render json: @service.to_json(include: [:components, :hosts])
+    render json: @service
   end
 
   # POST /services
