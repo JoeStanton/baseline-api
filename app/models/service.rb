@@ -1,4 +1,5 @@
 class Service < Node
-  include Pusherable
-  pusherable('updates')
+  attr_accessor :name, :description, :status
+  #include Pusherable
+  #pusherable('updates')
 end
