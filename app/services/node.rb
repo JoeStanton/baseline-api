@@ -6,8 +6,8 @@ class Node
     super
   end
 
-  def self.create(hash = nil)
-    node = self.new(hash)
+  def self.create(*args)
+    node = self.new(*args)
     node.save
   end
 
@@ -24,8 +24,9 @@ class Node
 
   def destroy!
     graph.nodes.delete self
-    outgoing.each(&:destroy)
-    incoming.each(&:destroy)
+    outgoing_edges.each(&:destroy!)
+    incoming_edges.each(&:destroy!)
+    true
   end
 
   def persisted?
@@ -35,20 +36,27 @@ class Node
   def relate(to, type)
     raise RuntimeError, 'Node must be saved before it can be related.' unless persisted?
     return if outgoing(type).include? to
-    edge = Edge.new(self, to, type)
-    graph.edges << edge
+    Edge.create(self, to, type)
+  end
+
+  def incoming_edges(type = nil)
+    edges = graph.edges.select { |edge| edge.to }
+    edges = edges.select { |edge| edge.type == type } if type
+    edges
   end
 
   def incoming(type = nil)
-    edges = graph.edges.select { |edge| edge.to }
+    incoming_edges(type).map(&:from)
+  end
+
+  def outgoing_edges(type = nil)
+    edges = graph.edges.select { |edge| edge.from }
     edges = edges.select { |edge| edge.type == type } if type
-    edges.map(&:from)
+    edges
   end
 
   def outgoing(type = nil)
-    edges = graph.edges.select { |edge| edge.from }
-    edges = edges.select { |edge| edge.type == type } if type
-    edges.map(&:to)
+    outgoing_edges(type).map(&:to)
   end
 
   def self.all

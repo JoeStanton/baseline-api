@@ -94,8 +94,10 @@ describe Node do
 
   describe "#destroy!" do
     it "should remove the node and any associated edges" do
-      node = Node.create
-      @n1
+      @n1.destroy!
+
+      @graph.nodes.should == [@n2]
+      @graph.edges.should be_empty
     end
   end
 end
