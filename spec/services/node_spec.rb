@@ -83,9 +83,9 @@ describe Node do
 
     describe "#relate" do
       it "should create the relationship" do
-
         edge = @graph.edges.first
         @graph.edges.should have(1).item
+
         edge.from.should == @n1
         edge.to.should == @n2
         edge.type.should == :depends_on
@@ -100,6 +100,7 @@ describe Node do
     describe "#outgoing" do
       it "should list related nodes via outgoing relationships" do
         @n1.outgoing.should == [@n2]
+        @n2.outgoing.should be_empty
       end
 
       it "should constrain by type" do

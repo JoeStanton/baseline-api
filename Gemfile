@@ -13,6 +13,8 @@ gem 'pusherable'
 gem 'rspec-rails'
 gem 'simplecov'
 
+gem 'active_model_serializers'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 

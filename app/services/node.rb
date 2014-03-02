@@ -1,6 +1,7 @@
 class Node
   attr_accessor :id
   include ActiveModel::Model
+  include ActiveModel::SerializerSupport
 
   def initialize(hash = nil)
     super
@@ -42,7 +43,7 @@ class Node
   end
 
   def incoming_edges(type = nil)
-    edges = graph.edges.select { |edge| edge.to }
+    edges = graph.edges.select { |edge| edge.to == self }
     edges = edges.select { |edge| edge.type == type } if type
     edges
   end
@@ -52,7 +53,7 @@ class Node
   end
 
   def outgoing_edges(type = nil)
-    edges = graph.edges.select { |edge| edge.from }
+    edges = graph.edges.select { |edge| edge.from == self }
     edges = edges.select { |edge| edge.type == type } if type
     edges
   end
