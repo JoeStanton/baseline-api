@@ -43,17 +43,6 @@ describe Node do
     end
   end
 
-  describe "#saving" do
-    it "should support hash initialization" do
-      class Dummy < Node
-        attr_accessor :name
-      end
-
-      node = Dummy.new(name: "Joe")
-      node.name.should == "Joe"
-    end
-  end
-
   describe "#relate" do
     it "should create the relationship" do
 
