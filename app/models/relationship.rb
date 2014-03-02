@@ -4,7 +4,8 @@ class Relationship < ActiveRecord::Base
       source_type: from.class.to_s,
       source_id: from.id,
       target_type: to.class.to_s,
-      target_id: to.id
+      target_id: to.id,
+      type: self.to_s
     )
   end
 
