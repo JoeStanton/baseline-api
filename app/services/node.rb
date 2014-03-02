@@ -3,13 +3,18 @@ class Node
   include ActiveModel::Model
   include ActiveModel::SerializerSupport
 
+  extend ActiveModel::Callbacks
+  define_model_callbacks :create, :commit, :destroy
+
   def initialize(hash = nil)
     super
   end
 
   def self.create(*args)
-    node = self.new(*args)
-    node.save
+    run_callbacks :create do
+      node = self.new(*args)
+      node.save
+    end
   end
 
   def graph
@@ -17,19 +22,23 @@ class Node
   end
 
   def save
-    unless persisted?
-      graph.nodes << self
-      @id = graph.nodes.size + 1
+    run_callbacks :commit do
+      unless persisted?
+        graph.nodes << self
+        @id = graph.nodes.size + 1
+      end
+      graph.save
+      self
     end
-    graph.save
-    self
   end
 
   def destroy!
-    graph.nodes.delete self
-    outgoing_edges.each(&:destroy!)
-    incoming_edges.each(&:destroy!)
-    true
+    run_callbacks :destroy do
+      graph.nodes.delete self
+      outgoing_edges.each(&:destroy!)
+      incoming_edges.each(&:destroy!)
+      true
+    end
   end
 
   def persisted?

@@ -5,6 +5,6 @@ class Service < Node
     outgoing(:depends_on)
   end
 
-  #include Pusherable
-  #pusherable('updates')
+  include Pusherable
+  pusherable('updates')
 end
