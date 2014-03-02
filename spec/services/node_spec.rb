@@ -16,6 +16,17 @@ describe Node do
     end
   end
 
+  describe ".find" do
+    it "should support querying by ID" do
+      @graph.nodes << Node.new
+
+      node = Node.new
+      @graph.nodes << node
+
+      Node.find(node.id).should == node
+    end
+  end
+
   describe "#new" do
     it "should support hash initialization" do
       class Dummy < Node

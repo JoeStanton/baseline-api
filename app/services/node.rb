@@ -32,4 +32,9 @@ class Node
   def self.all
     Graph.load.nodes.select { |n| n.is_a?(self) }
   end
+
+  def self.find(id)
+    raise ArgumentError, 'A numerical ID must be specified' unless id.is_a? Numeric
+    all.find { |n| n.id == id }
+  end
 end
