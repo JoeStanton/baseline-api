@@ -30,6 +30,6 @@ class Node
   end
 
   def self.all
-    Graph.load.nodes
+    Graph.load.nodes.select { |n| n.is_a?(self) }
   end
 end

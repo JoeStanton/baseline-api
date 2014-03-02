@@ -7,10 +7,12 @@ describe Node do
   end
 
   describe ".all" do
-    it "should support querying all" do
-      node = Node.new
+    it "should support querying all, constrained to the type" do
+      class Dummy < Node; end
+      node = Dummy.new
       @graph.nodes << node
-      Node.all.should == [node]
+      @graph.nodes << Node.new
+      Dummy.all.should == [node]
     end
   end
 
