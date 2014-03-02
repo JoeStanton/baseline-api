@@ -33,4 +33,22 @@ describe Service do
       @nodeB.incoming_edges(Dependency).should == [@rel]
     end
   end
+
+  describe "outgoing edges" do
+    it "should return all edges" do
+      @nodeB.outgoing_edges.should have(0).items
+      @nodeA.outgoing_edges.should have(2).items
+    end
+
+    it "should constrain edges by type" do
+      @nodeA.outgoing_edges(Dependency).should == [@rel]
+    end
+  end
+
+  describe "incoming nodes" do
+    it "should traverse edges" do
+      @nodeA.outgoing(Dependency).should == [@nodeB]
+      @nodeB.incoming(Dependency).should == [@nodeA]
+    end
+  end
 end
