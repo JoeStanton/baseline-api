@@ -16,8 +16,10 @@ class Node
   end
 
   def save
-    graph.nodes << self
-    @id = graph.nodes.size + 1
+    unless persisted?
+      graph.nodes << self
+      @id = graph.nodes.size + 1
+    end
     graph.save
     self
   end
