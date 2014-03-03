@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140202211445) do
+ActiveRecord::Schema.define(version: 20140302111942) do
 
   create_table "components", force: true do |t|
     t.string   "name"
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(version: 20140202211445) do
     t.string   "environment"
     t.string   "status"
     t.integer  "service_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "relationships", force: true do |t|
+    t.string   "source_type"
+    t.integer  "source_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

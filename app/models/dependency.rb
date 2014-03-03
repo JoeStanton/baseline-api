@@ -1,0 +1,2 @@
+class Dependency < Relationship
+end

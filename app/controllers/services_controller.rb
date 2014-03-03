@@ -4,7 +4,7 @@ class ServicesController < ApplicationController
   def index
     @services = Service.all
 
-    render json: @services.to_json(include: [:components, :hosts])
+    render json: @services
   end
 
   # GET /services/1
@@ -12,13 +12,13 @@ class ServicesController < ApplicationController
   def show
     @service = Service.find(params[:id])
 
-    render json: @service.to_json(include: [:components, :hosts])
+    render json: @service
   end
 
   # POST /services
   # POST /services.json
   def create
-    @service = Service.new(params[:service])
+    @service = Service.new(service_params)
 
     if @service.save
       render json: @service, status: :created, location: @service
@@ -32,7 +32,7 @@ class ServicesController < ApplicationController
   def update
     @service = Service.find(params[:id])
 
-    if @service.update(params[:service])
+    if @service.update(service_params)
       head :no_content
     else
       render json: @service.errors, status: :unprocessable_entity
@@ -46,5 +46,11 @@ class ServicesController < ApplicationController
     @service.destroy
 
     head :no_content
+  end
+
+  private
+
+  def service_params
+    params.require(:service).permit(:name, :description, :status)
   end
 end
