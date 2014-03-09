@@ -1,9 +1,11 @@
 LighthouseApi::Application.routes.draw do
+  root 'api#root'
+
   resources :components, except: [:new, :edit]
   resources :hosts, except: [:new, :edit], id: /.*/
   resources :services, except: [:new, :edit]
 
-  get "agent/install"
+  get "agent/install" => "agent#install", as: :agent_install
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
