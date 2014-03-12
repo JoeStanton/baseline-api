@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
   # GET /services/1
   # GET /services/1.json
   def show
-    @service = Service.find(params[:id])
+    @service = Service.find_by(slug: params[:id])
 
     render json: @service
   end
@@ -30,7 +30,19 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1
   # PATCH/PUT /services/1.json
   def update
-    @service = Service.find(params[:id])
+    @service = Service.find_by(slug: params[:id]) || Service.new
+
+    remaining = service_params.delete(:components)
+    @service.components.each do |component|
+      match = remaining.select { |c| c[:name] == component.name }.first
+      if match
+        remaining.delete(match)
+        component.update(match)
+      else
+        component.destroy
+      end
+    end
+    remaining.map { |c| @service.components.create(c) }
 
     if @service.update(service_params)
       head :no_content
@@ -42,7 +54,7 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   # DELETE /services/1.json
   def destroy
-    @service = Service.find(params[:id])
+    @service = Service.find_by(slug: params[:id])
     @service.destroy
 
     head :no_content
@@ -51,6 +63,7 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:service).permit(:name, :description, :status)
+    params.require(:service).permit!
+    #(:name, :description, :status, :components => [])
   end
 end
