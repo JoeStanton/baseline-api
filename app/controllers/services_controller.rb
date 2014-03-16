@@ -31,18 +31,9 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1.json
   def update
     @service = Service.find_by(slug: params[:id]) || Service.new
-
-    remaining = service_params.delete(:components)
-    @service.components.each do |component|
-      match = remaining.select { |c| c[:name] == component.name }.first
-      if match
-        remaining.delete(match)
-        component.update(match)
-      else
-        component.destroy
-      end
+    if components = service_params.delete(:components)
+      @service.update_components(components)
     end
-    remaining.map { |c| @service.components.create(c) }
 
     if @service.update(service_params)
       head :no_content

@@ -2,6 +2,9 @@ class Service < Node
   has_many :components
   has_many :hosts
 
+  include Pusherable
+  pusherable('updates')
+
   before_save :slugify
 
   def slugify
@@ -16,6 +19,17 @@ class Service < Node
     outgoing(Dependency)
   end
 
-  include Pusherable
-  pusherable('updates')
+  def update_components(new)
+    remaining = new
+    components.each do |component|
+      match = remaining.select { |c| c[:name] == component.name }.first
+      if match
+        remaining.delete(match)
+        component.update(match)
+      else
+        component.destroy
+      end
+    end
+    remaining.map { |c| components.create(c) }
+  end
 end

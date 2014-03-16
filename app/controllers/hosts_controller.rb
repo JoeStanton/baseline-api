@@ -32,7 +32,7 @@ class HostsController < ApplicationController
   def update
     @host = Host.find_by(hostname: params[:id])
 
-    if @host.update(params[:host])
+    if @host.update(host_params)
       head :no_content
     else
       render json: @host.errors, status: :unprocessable_entity

@@ -18,7 +18,7 @@ class ComponentsController < ApplicationController
   # POST /components
   # POST /components.json
   def create
-    @component = Component.new(params[:component])
+    @component = Component.new(component_params)
 
     if @component.save
       render json: @component, status: :created, location: @component
@@ -32,7 +32,7 @@ class ComponentsController < ApplicationController
   def update
     @component = Component.find_by(slug: params[:id])
 
-    if @component.update(params[:component])
+    if @component.update(component_params)
       head :no_content
     else
       render json: @component.errors, status: :unprocessable_entity
@@ -46,5 +46,9 @@ class ComponentsController < ApplicationController
     @component.destroy
 
     head :no_content
+  end
+
+  def component_params
+    params.require(:component).permit(:name, :description, :status)
   end
 end
