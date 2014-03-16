@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Service do
   before do
-    @nodeA = Service.create
-    @nodeB = Service.create
+    @nodeA = Service.create(name: 'Service A')
+    @nodeB = Service.create(name: 'Service B')
 
     @rel = Dependency.build(@nodeA, @nodeB)
     @rel2 = Relationship.build(@nodeA, @nodeB)
