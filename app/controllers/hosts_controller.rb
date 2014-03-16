@@ -50,7 +50,15 @@ class HostsController < ApplicationController
 
   private
 
+  def slugs_to_ids(hash)
+    transformed = hash.clone
+    slug = transformed[:host].delete('service_slug')
+    service = Service.find_by!(slug: slug) if slug
+    transformed[:host][:service_id] = service.id
+    transformed
+  end
+
   def host_params
-    params.require(:host).permit(:hostname, :ip)
+    slugs_to_ids(params).require(:host).permit(:hostname, :ip, :environment, :service_id)
   end
 end

@@ -10,7 +10,7 @@ class ComponentsController < ApplicationController
   # GET /components/1
   # GET /components/1.json
   def show
-    @component = Component.find(params[:id])
+    @component = Component.find_by(slug: params[:id])
 
     render json: @component
   end
@@ -30,7 +30,7 @@ class ComponentsController < ApplicationController
   # PATCH/PUT /components/1
   # PATCH/PUT /components/1.json
   def update
-    @component = Component.find(params[:id])
+    @component = Component.find_by(slug: params[:id])
 
     if @component.update(params[:component])
       head :no_content
@@ -42,7 +42,7 @@ class ComponentsController < ApplicationController
   # DELETE /components/1
   # DELETE /components/1.json
   def destroy
-    @component = Component.find(params[:id])
+    @component = Component.find_by(slug: params[:id])
     @component.destroy
 
     head :no_content
