@@ -30,8 +30,9 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1
   # PATCH/PUT /services/1.json
   def update
-    @service = Service.find_by(slug: params[:id]) || Service.new
-    if components = service_params.delete(:components)
+    components = service_params.delete(:components)
+    @service = Service.find_by(slug: params[:id]) || Service.create(service_params)
+    if components
       @service.update_components(components)
     end
 

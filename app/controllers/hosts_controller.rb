@@ -54,7 +54,7 @@ class HostsController < ApplicationController
     transformed = hash.clone
     slug = transformed[:host].delete('service_slug')
     service = Service.find_by!(slug: slug) if slug
-    transformed[:host][:service_id] = service.id
+    transformed[:host][:service_id] = service.id if service
     transformed
   end
 
