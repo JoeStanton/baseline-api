@@ -12,7 +12,8 @@ gem 'rspec-rails'
 gem 'simplecov'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'pg'
+gem 'rails_12factor', group: :production
 
 gem 'active_model_serializers'
 

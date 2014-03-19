@@ -1,7 +1,15 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.0.0
+- 2.0.0
+env:
+  matrix:
+  - DB=postgresql
 script:
-  - RAILS_ENV=test bin/rake db:test:prepare
-  - RAILS_ENV=test bin/rspec
+- bundle exec rake db:test:prepare
+- RAILS_ENV=test bundle exec rake spec
+before_script:
+- psql -c "CREATE USER \"lighthouse\" WITH PASSWORD 'notasecret';" -U postgres
+- psql -c 'ALTER USER "lighthouse" CREATEDB;' -U postgres
+- psql -c 'CREATE DATABASE "lighthouse-test"' -U postgres
+- psql -c 'ALTER DATABASE "lighthouse-test" OWNER TO "lighthouse"' -U postgres
