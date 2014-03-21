@@ -1,5 +1,6 @@
 class AgentController < ApplicationController
   def install
+    base_url = request.original_url.gsub('/agent/install/', '/')
     render text: <<-SCRIPT
       set -e
 
@@ -41,11 +42,11 @@ class AgentController < ApplicationController
       success "Installed lighthouse-agent"
 
       if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        ruby2.0 lighthouse-agent.rb setup #{root_url}
+        ruby2.0 lighthouse-agent.rb setup #{base_url}
       else
-        ./lighthouse-agent.rb setup #{root_url}
+        ./lighthouse-agent.rb setup #{base_url}
       fi
-      success "Registered with management server: #{root_url}"
+      success "Registered with management server: #{base_url}"
     SCRIPT
   end
 end
