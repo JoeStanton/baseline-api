@@ -1,6 +1,5 @@
 class AgentController < ApplicationController
   def install
-    root_url = root_url(protocol: "https") if Rails.env.production?
     render text: <<-SCRIPT
       set -e
 
@@ -15,38 +14,56 @@ class AgentController < ApplicationController
 
       if [[ "$OSTYPE" == "linux-gnu" ]]; then
         success "Detected linux"
-
-        if hash ruby2.0 2>/dev/null; then
-          success "Ruby 2.0 not detected - Adding APT Repository"
-          sudo apt-get install -qq -y python-software-properties
-          sudo add-apt-repository -y ppa:brightbox/ruby-ng-experimental
-          sudo apt-get update -qq
-
-          success "Installing Ruby"
-          sudo apt-get install -y -qq ruby2.0 ruby2.0-dev ruby2.0-doc git
-        else
-          success "Ruby 2.0 detected"
-        fi
-
-        sudo gem2.0 install bundler
       elif [[ "$OSTYPE" == "darwin"* ]]; then
         success "Detected Mac OS"
       else
         fail "Platform not supported."
       fi
 
+      if hash ruby 2>/dev/null && [[ "$(ruby -e 'print RUBY_VERSION')" == "2.0.0" ]]; then
+        RUBY="ruby"
+        GEM="gem"
+      elif hash ruby2.0 2>/dev/null; then
+        RUBY="ruby2.0"
+        GEM="gem2.0"
+      fi
+
+      if [[ "$OSTYPE" == "linux-gnu" ]] && test -z $RUBY; then
+        success "Ruby 2.0 not detected - Adding APT Repository"
+        sudo apt-get install -qq -y python-software-properties
+        sudo add-apt-repository -y ppa:brightbox/ruby-ng-experimental
+        sudo apt-get update -qq
+
+        success "Installing Ruby"
+        sudo apt-get install -y -qq ruby2.0 ruby2.0-dev ruby2.0-doc git
+      fi
+
+      if hash $RUBY; then
+        success "Detected Ruby 2.0"
+      else
+        fail "Ruby 2.0 not installed"
+      fi
+
       rm -rf /tmp/lighthouse-agent/
       git clone -q https://github.com/JoeStanton/lighthouse-agent.git /tmp/lighthouse-agent/
       cd /tmp/lighthouse-agent
+      success "Installing Bundler"
+      $GEM install bundler > /dev/null
       bundle install --quiet
+      $GEM build -q lighthouse-agent.gemspec > /dev/null && $GEM install -q lighthouse-agent-*.gem > /dev/null
       success "Installed lighthouse-agent"
 
-      if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        ruby2.0 lighthouse-agent.rb setup #{root_url}
-      else
-        ./lighthouse-agent.rb setup #{root_url}
-      fi
-      success "Registered with management server: #{root_url}"
+      lighthouse-agent setup #{root}
+      success "Registered with management server: #{root}"
     SCRIPT
+  end
+
+  private
+  def root
+    if Rails.env.production?
+       root_url(protocol: "https")
+    else
+      root_url
+    end
   end
 end
