@@ -13,6 +13,9 @@ gem 'pusherable'
 gem 'rspec-rails'
 gem 'simplecov'
 
+gem 'dotenv'
+gem 'slim' #for mailer templates
+
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 gem 'rails_12factor', group: :production
