@@ -30,7 +30,8 @@ class HostsController < ApplicationController
   # PATCH/PUT /hosts/1
   # PATCH/PUT /hosts/1.json
   def update
-    @host = Host.find_by(hostname: params[:id])
+    @host = Host.find_by(hostname: params[:id]) ||
+              Host.create(host_params.merge({hostname: params[:id]}))
 
     if @host.update(host_params)
       head :no_content
