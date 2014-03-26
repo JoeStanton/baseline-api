@@ -1,5 +1,6 @@
 class Node < ActiveRecord::Base
   self.abstract_class = true
+  after_update :log_status_change!, if: :status_changed?
 
   def outgoing_edges(type = nil)
     rels = Relationship.where(source_type: self.class, source_id: id)

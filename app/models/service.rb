@@ -1,6 +1,8 @@
 class Service < Node
   has_many :components
   has_many :hosts
+  has_many :events
+  has_many :incidents
 
   include Pusherable
   pusherable('updates')
@@ -13,6 +15,10 @@ class Service < Node
 
   def to_param
     slug
+  end
+
+  def open_incident
+    incidents.open.first
   end
 
   def dependencies
@@ -31,5 +37,9 @@ class Service < Node
       end
     end
     remaining.map { |c| components.create(c) }
+  end
+
+  def log_status_change!
+    CheckEvent.create(service: self, status: status)
   end
 end

@@ -1,4 +1,4 @@
-class Component < ActiveRecord::Base
+class Component < Node
   belongs_to :service
   belongs_to :host
 
@@ -12,5 +12,9 @@ class Component < ActiveRecord::Base
 
   def to_param
     slug
+  end
+
+  def log_status_change!
+    CheckEvent.create(service: service, component: self, host: host, status: status)
   end
 end
