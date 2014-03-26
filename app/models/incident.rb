@@ -5,6 +5,9 @@ class Incident < ActiveRecord::Base
   scope :open, -> { where(status: "open") }
   scope :resolved, -> { where(status: "resolved") }
 
+  include Pusherable
+  pusherable('updates')
+
   def update_status!
     return true unless status == "open"
     problems = events.where.not(status: "ok")

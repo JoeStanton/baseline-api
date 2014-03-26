@@ -3,4 +3,7 @@ class Event < ActiveRecord::Base
   belongs_to :component
   belongs_to :host
   belongs_to :incident
+
+  include Pusherable
+  pusherable('updates')
 end
