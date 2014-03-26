@@ -1,0 +1,2 @@
+class HostEvent < Event
+end
