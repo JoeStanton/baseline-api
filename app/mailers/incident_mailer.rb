@@ -1,5 +1,6 @@
 class IncidentMailer < ActionMailer::Base
   default from: "incidents@joestanton.co.uk"
+  layout "layout"
 
   def detected(incident)
     @incident = incident

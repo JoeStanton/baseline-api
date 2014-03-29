@@ -1,1 +1,36 @@
-h1 A terrible incident
+h3
+  a href="https://monitoring.joestanton.co.uk/incidents/"
+   | Incident ##{@incident.id} Detected - #{@incident.service.name}
+p
+  | This incident was opened automatically by Lighthouse as the result of 
+  | one or more failed health checks.
+a href="https://monitoring.joestanton.co.uk/incidents/"
+  | Investigate Incident
+.callout2
+  strong Incident Details
+table
+  tr
+    td
+      strong Service Status:
+    td Down
+  tr
+    td
+      strong Started at:
+    td
+      #{@incident.created_at.strftime "%a #{@incident.created_at.day.ordinalize} %B %Y %H:%M"} (#{time_ago_in_words @incident.created_at} ago)
+  tr
+    td
+      strong Hosts:
+    td
+      - if @incident.hosts.present?
+          = @incident.hosts.join ','
+      - else
+        | None
+  tr
+    td
+      strong Affected Components:
+    td 
+      - if @incident.components.present?
+          = @incident.components.join ','
+      - else
+        | None

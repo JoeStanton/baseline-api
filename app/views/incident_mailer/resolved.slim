@@ -1,1 +1,44 @@
-h1 The terrible incident was resolved
+h3
+  a href="https://monitoring.joestanton.co.uk/incidents/"
+   | Incident ##{@incident.id} Resolved - #{@incident.service.name}
+p
+  | This incident was resolved by Lighthouse as all services, components and hosts 
+  | returned to a healthy state.
+p
+  | Adding a post-mortem report detailing the root cause will help with troubleshooting 
+  | similar issues in future.
+a href="https://monitoring.joestanton.co.uk/incidents/"
+  | Review Incident
+.callout2
+  strong Incident Details
+table
+  tr
+    td
+      strong Service Status:
+    td OK
+  tr
+    td
+      strong Started at:
+    td
+      #{@incident.created_at.strftime "%a #{@incident.created_at.day.ordinalize} %B %Y %H:%M"} (#{time_ago_in_words @incident.created_at} ago)
+  tr
+    td
+      strong Resolved at:
+    td
+      #{@incident.resolved_at.strftime "%a #{@incident.resolved_at.day.ordinalize} %B %Y %H:%M"} (#{time_ago_in_words @incident.resolved_at} ago)
+  tr
+    td
+      strong Hosts:
+    td
+      - if @incident.hosts.present?
+          = @incident.hosts.join ','
+      - else
+        | None
+  tr
+    td
+      strong Affected Components:
+    td 
+      - if @incident.components.present?
+          = @incident.components.join ','
+      - else
+        | None
