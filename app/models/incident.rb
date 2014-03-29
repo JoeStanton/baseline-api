@@ -26,4 +26,12 @@ class Incident < ActiveRecord::Base
   def resolved?
     !open?
   end
+
+  def components
+    events.includes(:component).where.not(component_id: nil)
+  end
+
+  def hosts
+    events.includes(:host).where.not(host_id: nil)
+  end
 end
