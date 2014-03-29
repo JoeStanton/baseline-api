@@ -8,6 +8,13 @@ class Incident < ActiveRecord::Base
   include Pusherable
   pusherable('updates')
 
+  before_save :notify, if: :status_changed?
+
+  def notify
+    IncidentMailer.detected(self).deliver if open?
+    IncidentMailer.resolved(self).deliver if resolved?
+  end
+
   def update_status!
     return true unless status == "open"
     problems = events.where.not(status: "ok")
@@ -24,7 +31,7 @@ class Incident < ActiveRecord::Base
   end
 
   def resolved?
-    !open?
+    status == "resolved"
   end
 
   def components
