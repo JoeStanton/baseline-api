@@ -28,10 +28,10 @@ class Incident < ActiveRecord::Base
   end
 
   def components
-    events.includes(:component).where.not(component_id: nil)
+    events.includes(:component).where.not(component_id: nil).map(&:component)
   end
 
   def hosts
-    events.includes(:host).where.not(host_id: nil)
+    events.includes(:host).where.not(host_id: nil).map(&:host)
   end
 end
