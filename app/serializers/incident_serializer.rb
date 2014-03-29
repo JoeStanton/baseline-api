@@ -1,5 +1,15 @@
 class IncidentSerializer < ActiveModel::Serializer
-  attributes :id, :status, :resolved_at, :resolved_by, :root_cause, :service, :components, :hosts
+  attributes(
+    :id,
+    :status,
+    :created_at,
+    :resolved_at,
+    :resolved_by,
+    :root_cause,
+    :service,
+    :components,
+    :hosts
+  )
 
   def components
     object.components.map(&:name)
