@@ -8,7 +8,7 @@ class Incident < ActiveRecord::Base
   include Pusherable
   pusherable('updates')
 
-  before_save :notify, if: :status_changed?
+  after_save :notify, if: :status_changed?
 
   def notify
     IncidentMailer.detected(self).deliver if open?
