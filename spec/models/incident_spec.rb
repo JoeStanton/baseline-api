@@ -7,4 +7,18 @@ describe Incident do
 
     incident.reload.should be_resolved
   end
+
+  it "should trigger an email when detected" do
+    service = Service.create(name: "Fake Service")
+    IncidentMailer.stub_chain(:detected, :deliver)
+    Incident.create(status: "open", service: service)
+  end
+
+  it "should trigger an email when resolved" do
+    service = Service.create(name: "Fake Service")
+    incident = Incident.create(status: "open", service: service)
+    incident.resolve
+
+    IncidentMailer.stub_chain(:resolved, :deliver)
+  end
 end
