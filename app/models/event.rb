@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
   belongs_to :host
   belongs_to :incident
 
+  enum status: [:ok, :error, :registered, :deregistered]
+
   include Pusherable
   pusherable('updates')
 end

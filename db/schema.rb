@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140330115355) do
+ActiveRecord::Schema.define(version: 20140330122317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(version: 20140330115355) do
     t.string   "name"
     t.string   "type"
     t.string   "version"
-    t.string   "status"
     t.integer  "service_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
     t.string   "slug"
+    t.integer  "status",      default: 0
   end
 
   create_table "events", force: true do |t|
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 20140330115355) do
     t.integer  "host_id"
     t.integer  "incident_id"
     t.string   "type"
-    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status",       default: 0
   end
 
   add_index "events", ["component_id"], name: "index_events_on_component_id", using: :btree
@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20140330115355) do
     t.string   "hostname"
     t.string   "ip"
     t.string   "environment"
-    t.string   "status"
     t.integer  "service_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status",      default: 0
   end
 
   create_table "incidents", force: true do |t|
@@ -83,10 +83,10 @@ ActiveRecord::Schema.define(version: 20140330115355) do
   create_table "services", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.integer  "status",      default: 0
   end
 
 end

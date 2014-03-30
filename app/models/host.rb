@@ -1,4 +1,4 @@
-class Host < ActiveRecord::Base
+class Host < Node
   belongs_to :service
   has_many :components
   has_many :events
@@ -9,7 +9,7 @@ class Host < ActiveRecord::Base
 
   after_create :log_create!
   def log_create!
-    HostEvent.create(host: self, status: :create)
+    HostEvent.create(host: self, status: :registered)
   end
 
   def log_status_change!
@@ -18,6 +18,6 @@ class Host < ActiveRecord::Base
 
   before_destroy :log_destroy!
   def log_destroy!
-    HostEvent.create(host: self, status: :destroy)
+    HostEvent.create(host: self, status: :deregistered)
   end
 end
