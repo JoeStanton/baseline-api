@@ -43,4 +43,22 @@ describe ServicesController do
       service.reload.description.should == "New description"
     end
   end
+
+  describe "PUT service status" do
+    it "updates service status and triggers an incident" do
+      service = Service.create(name: "Problematic Service")
+      put :update, id: "problematic-service", service: { status: "error" }
+      assert_response :success
+
+      service.open_incident.should be_present
+    end
+
+    it "updates service status and closes an incident" do
+      service = Service.create(name: "Problematic Service")
+      put :update, id: "problematic-service", service: { status: "ok" }
+      assert_response :success
+
+      service.open_incident.should_not be_present
+    end
+  end
 end
