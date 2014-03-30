@@ -32,6 +32,9 @@ GEM
     addressable (2.3.6)
     arel (5.0.0)
     atomic (1.1.16)
+    bugsnag (1.8.6)
+      httparty (>= 0.6, < 1.0)
+      multi_json (~> 1.0)
     builder (3.2.2)
     byebug (2.7.0)
       columnize (~> 0.3)
@@ -47,6 +50,9 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     hike (1.2.3)
+    httparty (0.13.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     httpclient (2.3.4.1)
     i18n (0.6.9)
     json (1.8.1)
@@ -59,6 +65,7 @@ GEM
     mini_portile (0.5.3)
     minitest (5.3.1)
     multi_json (1.9.2)
+    multi_xml (0.5.5)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     pg (0.17.1)
@@ -162,6 +169,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  bugsnag
   byebug
   dotenv
   pg
