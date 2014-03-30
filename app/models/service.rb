@@ -9,6 +9,8 @@ class Service < Node
 
   before_save :slugify
 
+  validates :name, presence: true
+
   def slugify
     self.slug = name.downcase.gsub(/[^a-z1-9]+/, '-').chomp('-')
   end
