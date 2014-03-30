@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
   def index
-    render {}.to_json
+    render json: {}
   end
 end

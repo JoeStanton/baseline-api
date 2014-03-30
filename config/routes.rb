@@ -1,7 +1,7 @@
 LighthouseApi::Application.routes.draw do
-  resources :events, except: [:new, :edit]
-  root 'api#root'
+  root 'api#index'
 
+  resources :events, except: [:new, :edit]
   resources :hosts, except: [:new, :edit], id: /.*/
   resources :services, except: [:new, :edit] do
     resources :components, except: [:new, :edit]
