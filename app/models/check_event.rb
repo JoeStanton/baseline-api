@@ -4,7 +4,7 @@ class CheckEvent < Event
 
   def detect_incident
     return if status == "ok" and not service.open_incident
-    incident = service.open_incident || Incident.create(service: service, status: "open")
+    incident = service.open_incident || Incident.create(service: service)
     incident.events << self
   end
 

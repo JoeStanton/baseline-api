@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Incident do
   it "should be resolved when all problem nodes return an OK state" do
     service = Service.create(name: "Fake Service")
@@ -9,16 +11,21 @@ describe Incident do
   end
 
   it "should trigger an email when detected" do
+    message = double
+    message.should_receive(:deliver)
+
     service = Service.create(name: "Fake Service")
-    IncidentMailer.stub_chain(:detected, :deliver)
-    Incident.create(status: "open", service: service)
+    IncidentMailer.should_receive(:detected).and_return(message)
+    Incident.create(service: service)
   end
 
   it "should trigger an email when resolved" do
-    service = Service.create(name: "Fake Service")
-    incident = Incident.create(status: "open", service: service)
-    incident.resolve
+    message = double
+    message.should_receive(:deliver)
 
-    IncidentMailer.stub_chain(:resolved, :deliver)
+    service = Service.create(name: "Fake Service")
+    incident = Incident.create(service: service)
+    IncidentMailer.should_receive(:resolved).and_return(message)
+    incident.resolve
   end
 end
