@@ -2,6 +2,8 @@ class Incident < ActiveRecord::Base
   belongs_to :service
   has_many :events
 
+  default_scope -> { order(created_at: :desc) }
+
   enum status: [:open, :resolved]
   after_create :detected_notify, if: :open?
   after_save :resolved_notify, if: :resolved?

@@ -4,6 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :host
   belongs_to :incident
 
+  default_scope -> { order(created_at: :desc) }
   enum status: [:ok, :error, :registered, :deregistered]
 
   include Pusherable
