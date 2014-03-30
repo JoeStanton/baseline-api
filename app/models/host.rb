@@ -13,7 +13,7 @@ class Host < Node
   end
 
   def log_status_change!
-    Event.create(service: service, host: self, type: :check, status: status)
+    CheckEvent.create(service: service, host: self, status: status)
   end
 
   before_destroy :log_destroy!
