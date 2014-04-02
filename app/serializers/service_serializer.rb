@@ -1,5 +1,16 @@
 class ServiceSerializer < ActiveModel::Serializer
-  attributes :name, :slug, :status, :description, :dependencies, :components, :url, :graphite_path
+  attributes(
+    :name,
+    :slug,
+    :status,
+    :description,
+    :dependencies,
+    :components,
+    :url,
+    :graphite_path,
+    :mean_time_between_failure,
+    :mean_time_to_recovery
+  )
   has_many :hosts
 
   def url

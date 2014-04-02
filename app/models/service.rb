@@ -23,6 +23,22 @@ class Service < Node
     incidents.open.first
   end
 
+  def mean_time_between_failure
+    return nil if incidents.count < 1
+    total = 0
+    previous = created_at
+    incidents.each do |incident|
+      total += incident.created_at - previous
+      previous = incident.created_at
+    end
+    total / incidents.count
+  end
+
+  def mean_time_to_recovery
+    return 0.minutes if incidents.count < 1
+    incidents.all.reduce(&:duration) / incidents.count
+  end
+
   def dependencies
     outgoing(Dependency)
   end

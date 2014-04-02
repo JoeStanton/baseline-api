@@ -18,8 +18,12 @@ class Incident < ActiveRecord::Base
     resolve if ok
   end
 
+  def duration
+    (resolved_at || Time.now) - created_at
+  end
+
   def resolve
-    update(status: :resolved, resolved_at: DateTime.now)
+    update(status: :resolved, resolved_at: Time.now)
   end
 
   def components
