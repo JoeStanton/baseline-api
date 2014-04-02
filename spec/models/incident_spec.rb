@@ -28,4 +28,19 @@ describe Incident do
     IncidentMailer.should_receive(:resolved).and_return(message)
     incident.resolve
   end
+
+  describe "#duration" do
+    it "if unresolved - should calculate to current time" do
+      service = Service.create(name: "Fake Service")
+      incident = Incident.create(service: service, created_at: 1.day.ago)
+      incident.duration.should be_within(1.second).of(1.day)
+    end
+
+    it "if resolved - should calculate to resolved_at" do
+      service = Service.create(name: "Fake Service")
+      incident = Incident.create(service: service, created_at: 1.day.ago)
+      incident.resolve
+      incident.duration.should be_within(1.second).of(1.day)
+    end
+  end
 end

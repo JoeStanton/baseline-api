@@ -36,7 +36,7 @@ class Service < Node
 
   def mean_time_to_recovery
     return 0.minutes if incidents.count < 1
-    incidents.all.reduce(&:duration) / incidents.count
+    incidents.all.map(&:duration).sum / incidents.count
   end
 
   def dependencies
