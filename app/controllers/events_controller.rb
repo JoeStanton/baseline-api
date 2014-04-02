@@ -4,15 +4,14 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
 
-    render json: @events
+    render json: @events, each_serializer: EventSerializer
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-
-    render json: @event
+    render json: @event, serializer: EventSerializer
   end
 
   # POST /events
@@ -21,7 +20,7 @@ class EventsController < ApplicationController
     @event = Event.new(params[:event])
 
     if @event.save
-      render json: @event, status: :created, location: @event
+      render json: @event, status: :created, location: @event, serializer: EventSerializer
     else
       render json: @event.errors, status: :unprocessable_entity
     end
