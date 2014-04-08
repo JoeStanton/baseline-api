@@ -9,7 +9,8 @@ class ServiceSerializer < ActiveModel::Serializer
     :url,
     :graphite_path,
     :mean_time_between_failure,
-    :mean_time_to_recovery
+    :mean_time_to_recovery,
+    :availability
   )
   has_many :hosts
 

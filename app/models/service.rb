@@ -39,6 +39,11 @@ class Service < Node
     incidents.all.map(&:duration).sum / incidents.count
   end
 
+  def availability
+    return 1 unless mean_time_between_failure
+    mean_time_between_failure / (mean_time_between_failure + mean_time_to_recovery)
+  end
+
   def dependencies
     outgoing(Dependency)
   end
