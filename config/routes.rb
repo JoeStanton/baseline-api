@@ -4,6 +4,7 @@ BaselineApi::Application.routes.draw do
   resources :events, except: [:new, :edit]
   resources :hosts, except: [:new, :edit], id: /.*/
   resources :services, except: [:new, :edit] do
+    member { get 'spec' }
     resources :components, except: [:new, :edit]
   end
   resources :incidents, except: [:new, :edit]

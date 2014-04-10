@@ -52,6 +52,12 @@ class ServicesController < ApplicationController
     head :no_content
   end
 
+  def spec
+    @service = Service.find_by(slug: params[:id])
+    p @service
+    render text: @service.spec
+  end
+
   private
 
   def service_params
