@@ -54,7 +54,6 @@ class ServicesController < ApplicationController
 
   def spec
     @service = Service.find_by(slug: params[:id])
-    p @service
     render text: @service.spec
   end
 
