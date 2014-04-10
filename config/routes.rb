@@ -1,4 +1,4 @@
-LighthouseApi::Application.routes.draw do
+BaselineApi::Application.routes.draw do
   root 'api#index'
 
   resources :events, except: [:new, :edit]

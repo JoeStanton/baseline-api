@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-LighthouseApi::Application.load_tasks
+BaselineApi::Application.load_tasks

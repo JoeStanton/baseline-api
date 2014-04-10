@@ -16,4 +16,4 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-LighthouseApi::Application.config.secret_token = 'ab70f686e79497881d6fdf02fee3fb88816f6d42abcb88f468024e502c213e68f630920fea381ba4866c5ad789a2df8b6e33abc86a25cd4e1abcbe9e526ea5f3'
+BaselineApi::Application.config.secret_token = 'ab70f686e79497881d6fdf02fee3fb88816f6d42abcb88f468024e502c213e68f630920fea381ba4866c5ad789a2df8b6e33abc86a25cd4e1abcbe9e526ea5f3'

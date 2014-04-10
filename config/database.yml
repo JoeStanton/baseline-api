@@ -2,8 +2,8 @@ development:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: lighthouse-dev
-  username: lighthouse
+  database: baseline-dev
+  username: baseline
   password: notasecret
   pool: 5
   timeout: 5000
@@ -15,8 +15,8 @@ test:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: lighthouse-test
-  username: lighthouse
+  database: baseline-test
+  username: baseline
   password: notasecret
   pool: 5
   timeout: 5000
@@ -25,8 +25,8 @@ production:
   adapter: postgresql
   encoding: unicode
   host: localhost
-  database: lighthouse
-  username: lighthouse
+  database: baseline
+  username: baseline
   password: notasecret
   pool: 5
   timeout: 5000

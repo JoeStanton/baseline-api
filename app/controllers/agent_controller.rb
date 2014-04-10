@@ -44,16 +44,16 @@ class AgentController < ApplicationController
         fail "Ruby 2.0 not installed"
       fi
 
-      rm -rf /tmp/lighthouse-agent/
-      git clone -q https://github.com/JoeStanton/lighthouse-agent.git /tmp/lighthouse-agent/
-      cd /tmp/lighthouse-agent
+      rm -rf /tmp/baseline-agent/
+      git clone -q https://github.com/JoeStanton/baseline-agent.git /tmp/baseline-agent/
+      cd /tmp/baseline-agent
       success "Installing Bundler"
       $GEM install bundler > /dev/null
       bundle install --quiet
-      $GEM build -q lighthouse-agent.gemspec > /dev/null && $GEM install -q lighthouse-agent-*.gem > /dev/null
-      success "Installed lighthouse-agent"
+      $GEM build -q baseline-agent.gemspec > /dev/null && $GEM install -q baseline-agent-*.gem > /dev/null
+      success "Installed baseline-agent"
 
-      lighthouse-agent setup #{root}
+      baseline-agent setup #{root}
       success "Registered with management server: #{root}"
     SCRIPT
   end
