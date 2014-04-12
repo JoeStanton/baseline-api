@@ -1,6 +1,6 @@
 class Node < ActiveRecord::Base
   self.abstract_class = true
-  enum status: [:ok, :error, :unknown]
+  enum status: [:unknown, :ok, :error]
 
   after_update :log_status_change!, if: :status_changed?
 
