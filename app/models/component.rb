@@ -15,6 +15,6 @@ class Component < Node
   end
 
   def log_status_change!
-    CheckEvent.create(service: service, component: self, host: host, status: status)
+    CheckEvent.create(service: service, component: self, host: host, status: status, message: status_message)
   end
 end

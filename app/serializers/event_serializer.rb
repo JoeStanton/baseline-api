@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :type, :status, :created_at
+  attributes :id, :type, :status, :message, :created_at
   has_one :service
   has_one :component
   has_one :host

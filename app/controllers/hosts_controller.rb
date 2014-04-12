@@ -60,6 +60,6 @@ class HostsController < ApplicationController
   end
 
   def host_params
-    slugs_to_ids(params).require(:host).permit(:hostname, :ip, :environment, :service_id, :status)
+    slugs_to_ids(params).require(:host).permit(:hostname, :ip, :environment, :service_id, :status, :status_message)
   end
 end

@@ -2,6 +2,7 @@ class Node < ActiveRecord::Base
   self.abstract_class = true
   enum status: [:unknown, :ok, :error]
 
+  attr_accessor(:status_message) # transient property
   after_update :log_status_change!, if: :status_changed?
 
   def outgoing_edges(type = nil)

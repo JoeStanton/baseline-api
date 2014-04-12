@@ -63,6 +63,6 @@ class Service < Node
   end
 
   def log_status_change!
-    CheckEvent.create(service: self, status: status)
+    CheckEvent.create(service: self, status: status, message: status_message)
   end
 end
