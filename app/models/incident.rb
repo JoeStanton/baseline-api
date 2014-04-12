@@ -27,11 +27,11 @@ class Incident < ActiveRecord::Base
   end
 
   def components
-    events.includes(:component).where.not(component_id: nil).map(&:component)
+    events.includes(:component).where.not(component_id: nil).map(&:component).uniq
   end
 
   def hosts
-    events.includes(:host).where.not(host_id: nil).map(&:host)
+    events.includes(:host).where.not(host_id: nil).map(&:host).uniq
   end
 
   def detected_notify
