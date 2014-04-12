@@ -39,6 +39,6 @@ table
       strong Affected Components:
     td 
       - if @incident.components.present?
-          = @incident.components.join ','
+          = @incident.components.map(&:name).join ','
       - else
         | None
