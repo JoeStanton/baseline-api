@@ -2,8 +2,15 @@ class Node < ActiveRecord::Base
   self.abstract_class = true
   enum status: [:unknown, :ok, :error]
 
+  has_many :events
+
   attr_accessor(:status_message) # transient property
   after_update :log_status_change!, if: :status_changed?
+
+  def latest_message
+    event = events.first
+    event.message if event
+  end
 
   def outgoing_edges(type = nil)
     rels = Relationship.where(source_type: self.class, source_id: id)

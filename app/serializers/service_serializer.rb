@@ -3,6 +3,7 @@ class ServiceSerializer < ActiveModel::Serializer
     :name,
     :slug,
     :status,
+    :latest_message,
     :description,
     :dependencies,
     :components,
