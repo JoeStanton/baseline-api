@@ -1,6 +1,7 @@
 class Component < Node
   belongs_to :service
   belongs_to :host
+  has_many :events
 
   include Pusherable
   pusherable('updates')

@@ -6,7 +6,6 @@ class ServiceSerializer < ActiveModel::Serializer
     :latest_message,
     :description,
     :dependencies,
-    :components,
     :url,
     :graphite_path,
     :mean_time_between_failure,
@@ -14,6 +13,7 @@ class ServiceSerializer < ActiveModel::Serializer
     :availability
   )
   has_many :hosts
+  has_many :components
 
   def url
     service_url(object)
