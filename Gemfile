@@ -2,7 +2,7 @@ ruby '2.0.0'
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0.rc2'
+gem 'rails', '~> 4.1.0'
 gem 'rails-api'
 
 gem 'thin'
@@ -43,3 +43,5 @@ gem 'twilio-ruby'
 
 # To use debugger
  gem 'byebug', require: 'byebug', group: :development
+
+gem 'newrelic_rpm'
