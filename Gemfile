@@ -44,4 +44,5 @@ gem 'twilio-ruby'
 # To use debugger
  gem 'byebug', require: 'byebug', group: :development
 
+gem 'ruby-prof'
 gem 'newrelic_rpm'

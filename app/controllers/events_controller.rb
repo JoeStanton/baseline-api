@@ -3,6 +3,10 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @events = Event.all
+                   .includes(:host)
+                   .includes(:incident)
+                   .includes(:service)
+                   .includes(:component)
 
     render json: @events, each_serializer: EventSerializer
   end
