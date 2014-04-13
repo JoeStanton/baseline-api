@@ -7,6 +7,10 @@ class Event < ActiveRecord::Base
   default_scope -> { order(created_at: :desc) }
   enum status: [:ok, :error, :registered, :deregistered]
 
+  delegate :name, to: :service, prefix: true, allow_nil: true
+  delegate :name, to: :component, prefix: true, allow_nil: true
+  delegate :hostname, to: :host, allow_nil: true
+
   include Pusherable
   pusherable('updates')
 end

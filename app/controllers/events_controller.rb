@@ -4,7 +4,6 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
                    .includes(:host)
-                   .includes(:incident)
                    .includes(:service)
                    .includes(:component)
 
