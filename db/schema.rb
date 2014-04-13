@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412145819) do
+ActiveRecord::Schema.define(version: 20140413143100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20140412145819) do
     t.datetime "updated_at"
     t.integer  "status",       default: 0
     t.string   "message"
+    t.string   "description"
+    t.string   "url"
+    t.string   "author"
+    t.string   "repo"
+    t.string   "branch"
+    t.string   "commit"
   end
 
   add_index "events", ["component_id"], name: "index_events_on_component_id", using: :btree

@@ -8,6 +8,7 @@ class EventSerializer < ActiveModel::Serializer
     :incident_id,
     :service_name,
     :component_name,
-    :hostname
+    :hostname,
+    :url
   )
 end
