@@ -11,6 +11,8 @@ class Incident < ActiveRecord::Base
   include Pusherable
   pusherable('updates')
 
+  delegate :name, to: :service, prefix: true, allow_nil: true
+
   def update_status!
     return true unless open?
     problems = events.where.not(status: "ok")

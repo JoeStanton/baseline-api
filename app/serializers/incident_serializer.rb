@@ -11,6 +11,13 @@ class IncidentSerializer < ActiveModel::Serializer
     :hosts
   )
 
+  def service
+    {
+      name: object.service.name,
+      status: object.service.status
+    }
+  end
+
   def components
     object.components.map(&:name)
   end

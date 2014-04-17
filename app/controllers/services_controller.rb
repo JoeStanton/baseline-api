@@ -54,7 +54,11 @@ class ServicesController < ApplicationController
 
   def spec
     @service = Service.find_by(slug: params[:id])
-    render text: @service.spec
+    if @service
+      render text: @service.spec
+    else
+      render text: "404 Not Found", status: 404
+    end
   end
 
   private
