@@ -10,7 +10,8 @@ class ServiceSerializer < ActiveModel::Serializer
     :graphite_path,
     :mean_time_between_failure,
     :mean_time_to_recovery,
-    :availability
+    :availability,
+    :spec
   )
   has_many :hosts
   has_many :components
