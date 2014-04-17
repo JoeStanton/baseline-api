@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :incident
 
   default_scope -> { order(created_at: :desc) }
-  enum status: [:ok, :error, :registered, :deregistered]
+  enum status: [:ok, :error, :unknown, :registered, :deregistered]
 
   delegate :name, to: :service, prefix: true, allow_nil: true
   delegate :name, to: :component, prefix: true, allow_nil: true
