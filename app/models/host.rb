@@ -3,6 +3,9 @@ class Host < Node
   has_many :components
   has_many :events
 
+  include Pusherable
+  pusherable('updates')
+
   def to_param
     hostname
   end
