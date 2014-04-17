@@ -6,7 +6,7 @@ class Node < ActiveRecord::Base
   after_update :log_status_change!, if: :status_changed?
 
   def latest_message
-    event = events.where(type: :check_event).first
+    event = events.where(type: "CheckEvent").first
     event.message if event
   end
 
