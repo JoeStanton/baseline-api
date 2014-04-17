@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20140413143100) do
     t.datetime "updated_at"
     t.integer  "status",       default: 0
     t.string   "message"
-    t.string   "description"
     t.string   "url"
     t.string   "author"
     t.string   "repo"

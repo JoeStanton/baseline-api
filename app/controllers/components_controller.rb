@@ -2,7 +2,7 @@ class ComponentsController < ApplicationController
   # GET /components
   # GET /components.json
   def index
-    @components = Component.all
+    @components = service.components
 
     render json: @components
   end
@@ -10,7 +10,7 @@ class ComponentsController < ApplicationController
   # GET /components/1
   # GET /components/1.json
   def show
-    @component = Component.find_by(slug: params[:id])
+    @component = service.components.find_by(slug: params[:id])
 
     render json: @component
   end
@@ -18,7 +18,7 @@ class ComponentsController < ApplicationController
   # POST /components
   # POST /components.json
   def create
-    @component = Component.new(component_params)
+    @component = service.components.new(component_params)
 
     if @component.save
       render json: @component, status: :created, location: @component
@@ -30,7 +30,7 @@ class ComponentsController < ApplicationController
   # PATCH/PUT /components/1
   # PATCH/PUT /components/1.json
   def update
-    @component = Component.find_by(slug: params[:id])
+    @component = service.components.find_by!(slug: params[:id])
 
     if @component.update(component_params)
       head :no_content
@@ -46,6 +46,10 @@ class ComponentsController < ApplicationController
     @component.destroy
 
     head :no_content
+  end
+
+  def service
+    Service.find_by!(slug: params[:service_id])
   end
 
   def component_params
