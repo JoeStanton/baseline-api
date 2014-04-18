@@ -46,7 +46,7 @@ class ServicesController < ApplicationController
   # DELETE /services/1
   # DELETE /services/1.json
   def destroy
-    @service = Service.find_by(slug: params[:id])
+    @service = Service.find_by!(slug: params[:id])
     @service.destroy
 
     head :no_content
