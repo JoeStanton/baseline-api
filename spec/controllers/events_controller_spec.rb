@@ -24,8 +24,15 @@ describe EventsController do
 
   describe "POST event" do
     it "adds an event of the correct type" do
+      Service.create(name: "Example")
+      Host.create(hostname: "example-host")
       expect {
-        post :create, event: { message: "Sample Deployment", type: "Deployment" }
+        post :create, event: {
+          message: "Sample Deployment",
+          type: "Deployment",
+          service_slug: "example",
+          host_slug: "example-host"
+        }
       }.to change(Deployment, :count).by(1)
       assert_response :success
     end

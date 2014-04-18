@@ -29,18 +29,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
-  def update
-    @event = Event.find(params[:id])
-
-    if @event.update(event_params)
-      head :no_content
-    else
-      render json: @event.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
