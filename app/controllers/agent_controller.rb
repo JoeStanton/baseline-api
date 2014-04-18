@@ -36,6 +36,7 @@ class AgentController < ApplicationController
 
         success "Installing Ruby"
         sudo apt-get install -y -qq ruby2.0 ruby2.0-dev ruby2.0-doc git
+        sudo chown -R $USER /var/lib/gems
       fi
 
       if hash $RUBY; then
