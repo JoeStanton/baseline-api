@@ -33,4 +33,12 @@ describe Service do
       service.mean_time_to_recovery.should be_within(1.second).of(10.minutes)
     end
   end
+
+  describe 'availability' do
+    it 'should be calculated correctly' do
+      service = Service.create(name: "Fake Service", status: "ok", created_at: DateTime.now)
+      Incident.create(service: service, created_at: 5.minutes.from_now, resolved_at: 10.minutes.from_now, status: "resolved")
+      service.availability.should be_within(0.01).of(0.5)
+    end
+  end
 end
