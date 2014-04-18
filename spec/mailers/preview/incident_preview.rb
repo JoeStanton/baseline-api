@@ -1,8 +1,8 @@
 class IncidentPreview < ActionMailer::Preview
   def detected
     incident = Incident.new(id: 101, service: Service.first, created_at: DateTime.now)
-    incident.components.build(name: "Nginx")
-    incident.hosts.new(hostname: "rb-prod-01")
+    incident.components << Component.new(name: "Nginx")
+    incident.hosts << Host.new(hostname: "rb-prod-01")
     IncidentMailer.detected(incident)
   end
 

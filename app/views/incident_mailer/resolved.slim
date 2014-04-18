@@ -1,5 +1,5 @@
 h3
-  a href="https://monitoring.joestanton.co.uk/incidents/"
+  a href="https://monitoring.joestanton.co.uk/#{@incident.service.slug}/incidents"
    | Incident ##{@incident.id} Resolved - #{@incident.service.name}
 p
   | This incident was resolved by Baseline as all services, components and hosts 
