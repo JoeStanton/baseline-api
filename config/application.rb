@@ -38,10 +38,10 @@ module BaselineApi
       :enable_starttls_auto => true
     }
 
-    config.middleware.use Rack::Cors do
+    config.middleware.insert_after Rails::Rack::Logger, Rack::Cors, :logger => Rails.logger,:debug => true do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*', :headers => :any, :methods => [:get, :post, :put, :patch, :delete, :options]
       end
     end
   end
