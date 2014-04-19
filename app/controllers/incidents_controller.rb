@@ -18,7 +18,7 @@ class IncidentsController < ApplicationController
   # POST /incidents
   # POST /incidents.json
   def create
-    @incident = Incident.new(params[:incident])
+    @incident = Incident.new(incident_params)
 
     if @incident.save
       render json: @incident, status: :created, location: @incident
@@ -32,7 +32,7 @@ class IncidentsController < ApplicationController
   def update
     @incident = Incident.find(params[:id])
 
-    if @incident.update(params[:incident])
+    if @incident.update(incident_params)
       head :no_content
     else
       render json: @incident.errors, status: :unprocessable_entity
@@ -46,5 +46,9 @@ class IncidentsController < ApplicationController
     @incident.destroy
 
     head :no_content
+  end
+
+  def incident_params
+    params.require(:incident).permit!
   end
 end
