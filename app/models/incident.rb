@@ -43,4 +43,12 @@ class Incident < ActiveRecord::Base
   def resolved_notify
     IncidentMailer.resolved(self).deliver
   end
+
+  def predicted_root_cause
+    problems = []
+    problems << service unless service.ok?
+    problems << components
+    problems.flatten!
+    problems.find { |p| p.dependencies.all?(&:ok?) }
+  end
 end

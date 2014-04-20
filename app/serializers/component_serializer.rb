@@ -7,6 +7,7 @@ class ComponentSerializer < ActiveModel::Serializer
     :version,
     :created_at,
     :status,
-    :latest_message
+    :latest_message,
+    :dependencies
   )
 end

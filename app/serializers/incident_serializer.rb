@@ -8,7 +8,8 @@ class IncidentSerializer < ActiveModel::Serializer
     :root_cause,
     :service,
     :components,
-    :hosts
+    :hosts,
+    :predicted_root_cause
   )
 
   def service
@@ -24,5 +25,9 @@ class IncidentSerializer < ActiveModel::Serializer
 
   def hosts
     object.hosts.map(&:hostname)
+  end
+
+  def predicted_root_cause
+    object.predicted_root_cause.slug if object.open?
   end
 end

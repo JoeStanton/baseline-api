@@ -43,4 +43,24 @@ describe Incident do
       incident.duration.should be_within(1.second).of(1.day)
     end
   end
+
+  describe "predicted_root_cause" do
+    it "should predict a root cause" do
+      # Service -> Nginx -> App (Down)
+      service = Service.create(name: "Fake Service", status: :ok)
+      nginx = service.components.create(name: "Nginx", status: :ok)
+      app = service.components.create(name: "App", status: :ok)
+      redis = service.components.create(name: "Redis", status: :ok)
+
+      Dependency.build(service, nginx)
+      Dependency.build(service, redis)
+      Dependency.build(nginx, app)
+
+      service.update(status: :error)
+      nginx.update(status: :error)
+      app.update(status: :error)
+
+      service.open_incident.predicted_root_cause.should == app
+    end
+  end
 end

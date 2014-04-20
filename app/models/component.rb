@@ -15,6 +15,15 @@ class Component < Node
     slug
   end
 
+  def dependencies=(deps)
+    return unless deps
+    deps.each { |d| Dependency.build(self, Component.find_by(name: d)) }
+  end
+
+  def dependencies
+    outgoing(Dependency)
+  end
+
   def log_status_change!
     CheckEvent.create(service: service, component: self, host: host, status: status, message: status_message)
   end
