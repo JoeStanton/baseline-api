@@ -44,11 +44,39 @@ class Incident < ActiveRecord::Base
     IncidentMailer.resolved(self).deliver
   end
 
+  def reachable?(from, to)
+    @matrix = matrix
+    @matrix.fetch [from.id, to.id] { false }
+  end
+
+  def matrix
+    ActiveRecord::Base.connection.execute("""
+      WITH RECURSIVE search_graph AS (
+        SELECT source_id, ARRAY[target_id] AS path
+        FROM relationships
+
+        UNION ALL
+        SELECT g.target_id, sg.path || g.source_id
+        FROM   search_graph sg
+        JOIN   relationships g ON g.target_id = sg.source_id
+        WHERE g.target_id <> ALL(sg.path)
+      )
+      SELECT path[array_upper(path,1)] AS from,
+             path[1] AS to,
+             path
+      FROM   search_graph
+      ORDER  BY path;
+    """).inject({}) do |h, path|
+      h[[path["from"].to_i, path["to"].to_i]] = path["path"] unless path["from"] == path["to"]
+      h
+    end
+  end
+
   def predicted_root_cause
     problems = []
     problems << service unless service.ok?
     problems << components
     problems.flatten!
-    problems.find { |p| p.dependencies.all?(&:ok?) }
+    problems.find { |p| p.dependencies.all?(&:ok?) }.find { |p| reachable?(service, p) }
   end
 end

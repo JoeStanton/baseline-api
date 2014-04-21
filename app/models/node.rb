@@ -29,4 +29,10 @@ class Node < ActiveRecord::Base
   def incoming(type = nil)
     incoming_edges(type).map(&:source)
   end
+
+  def dependencies=(deps)
+    return unless deps
+    deps.each { |d| Dependency.build(self, Component.find_by(name: d)) }
+  end
+
 end

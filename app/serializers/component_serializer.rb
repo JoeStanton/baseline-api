@@ -10,4 +10,8 @@ class ComponentSerializer < ActiveModel::Serializer
     :latest_message,
     :dependencies
   )
+
+  def dependencies
+    object.dependencies.map(&:slug)
+  end
 end

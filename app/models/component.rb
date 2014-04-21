@@ -15,11 +15,6 @@ class Component < Node
     slug
   end
 
-  def dependencies=(deps)
-    return unless deps
-    deps.each { |d| Dependency.build(self, Component.find_by(name: d)) }
-  end
-
   def dependencies
     outgoing(Dependency)
   end

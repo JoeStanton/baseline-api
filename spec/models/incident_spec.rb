@@ -53,8 +53,8 @@ describe Incident do
       redis = service.components.create(name: "Redis", status: :ok)
 
       Dependency.build(service, nginx)
-      Dependency.build(service, redis)
       Dependency.build(nginx, app)
+      Dependency.build(service, redis)
 
       service.update(status: :error)
       nginx.update(status: :error)
