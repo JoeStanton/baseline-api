@@ -77,6 +77,6 @@ class Incident < ActiveRecord::Base
     problems << service unless service.ok?
     problems << components
     problems.flatten!
-    problems.find { |p| p.dependencies.all?(&:ok?) }.find { |p| reachable?(service, p) }
+    problems.find { |p| p.dependencies.all?(&:ok?) }
   end
 end
